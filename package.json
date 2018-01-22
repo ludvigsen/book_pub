@@ -14,5 +14,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "truffle-contract": "^3.0.2",
+    "web3": "^0.20.4"
   }
 }
