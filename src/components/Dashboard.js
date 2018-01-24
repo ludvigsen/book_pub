@@ -1,29 +1,27 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Web3 from 'web3';
 import contract from 'truffle-contract';
 import BookPub from '../contracts/BookPub';
+import getWeb3 from '../utils/getWeb3';
 
-const web3 = new Web3();
-web3.setProvider(new web3.providers.HttpProvider('http://localhost:8545'));
-
-const network = Object.keys(BookPub.networks)[0];
-const address = BookPub.networks[network].address;
-const bookPub = contract(BookPub);
-bookPub.setProvider(new web3.providers.HttpProvider('http://localhost:8545'));
-
-let bp;
+let bookPub;
 
 class Dashboard extends Component {
   state = {};
   constructor(props) {
     super(props);
-    bookPub.deployed().then(instance => {
-      console.log(instance);
-      bp = instance;
-      instance.books(0).then(book => {
-        this.setState({ book });
-        console.log(book);
+    getWeb3().then(web3 => {
+      const network = Object.keys(BookPub.networks)[0];
+      const address = BookPub.networks[network].address;
+      bookPub = contract(BookPub);
+      bookPub.setProvider(web3.currentProvider);
+      bookPub.deployed().then(instance => {
+        console.log(instance);
+        bookPub = instance;
+        instance.books(0).then(book => {
+          this.setState({ book });
+          console.log(book);
+        });
       });
     });
   }

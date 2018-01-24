@@ -1549,14 +1549,21 @@
     "version": "0.4.18+commit.9cf6e910.Emscripten.clang"
   },
   "networks": {
-    "1516656791555": {
+    "4": {
       "events": {},
       "links": {
-        "BookQueueLib": "0xaf450cd9346aa4489be6584d15392cfd37d3dbd4"
+        "BookQueueLib": "0x67fc2eaa99a3d398b863bd13a11e894a00c208a4"
       },
-      "address": "0xd292cf3b2f0c62bd5936fcedaa1254ebf1018715"
+      "address": "0xe46618caa17744869b583f7d7505697ca22b4e96"
+    },
+    "1516827698480": {
+      "events": {},
+      "links": {
+        "BookQueueLib": "0x365d3d00b614faf0a64b023d0798a5a0a15106bc"
+      },
+      "address": "0x02db4099a5aac30f48104bd9a5c1fd1bf0332635"
     }
   },
   "schemaVersion": "1.0.1",
-  "updatedAt": "2018-01-22T22:06:08.589Z"
+  "updatedAt": "2018-01-24T21:23:00.384Z"
 }

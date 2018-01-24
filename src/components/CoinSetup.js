@@ -5,28 +5,26 @@ import TextField from 'material-ui/TextField';
 import Slider from 'material-ui/Slider';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-import Web3 from 'web3';
+import getWeb3 from '../utils/getWeb3';
 import contract from 'truffle-contract';
 import BookPub from '../contracts/BookPub';
 
-const web3 = new Web3();
-web3.setProvider(new web3.providers.HttpProvider('http://localhost:8545'));
-console.log(web3.eth.accounts);
-console.log(web3);
-console.log(BookPub);
+let bookPub;
+let web3;
+getWeb3().then(web3Instance => {
+  web3 = web3Instance;
+  const network = Object.keys(BookPub.networks)[0];
+  bookPub = contract(BookPub);
+  console.log('web3: ', web3.currentProvider);
+  bookPub.setProvider(web3.currentProvider);
+  bookPub.deployed().then(instance => {
+    console.log(instance);
+    bookPub = instance;
+  });
+})
 
-const network = Object.keys(BookPub.networks)[0];
-const address = BookPub.networks[network].address;
-console.log(address);
-const bookPub = contract(BookPub);
-bookPub.setProvider(new web3.providers.HttpProvider('http://localhost:8545'));
-console.log(bookPub);
 
-let bp;
-bookPub.deployed().then(instance => {
-  console.log(instance);
-  bp = instance;
-});
+
 
 class CoinSetup extends Component {
   state = {
@@ -70,7 +68,7 @@ class CoinSetup extends Component {
 
       { from: web3.eth.accounts[0] },
     );
-    bp.publishBook(
+    bookPub.publishBook(
       readershipStake,
       goal,
       toBeShipped,
@@ -80,7 +78,7 @@ class CoinSetup extends Component {
       coinName,
       decimalUnits,
       symbol,
-      { from: web3.eth.accounts[0], gas: 9000000 },
+      { from: web3.eth.accounts[0] },
     );
   };
 
